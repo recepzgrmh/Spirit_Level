@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'dart:math';
+import 'package:flutter/services.dart';
 
-void main(List<String> args) {
-  runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -16,6 +22,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
   double bubblePosition = 0.0;
+  double sensitivityFactor = 40.0; // Sensitivity artırıldı
+  double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
@@ -26,13 +34,24 @@ class _MyAppState extends State<MyApp> {
         yAccel = event.y;
         zAccel = event.z;
 
-        bubblePosition = (xAccel * 10).clamp(-100, 100);
+        // Bubble pozisyonunu ayarla ve sınırları aşmasını engelle
+        double newPosition = (-yAccel * sensitivityFactor).clamp(
+          -maxBubbleOffset,
+          maxBubbleOffset,
+        );
+
+        bubblePosition = newPosition;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double rectangleWidth = screenWidth * 0.8;
+    double bubbleSize = 60;
+    maxBubbleOffset = (rectangleWidth - bubbleSize) / 2;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -45,12 +64,22 @@ class _MyAppState extends State<MyApp> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: 250,
+                    width: rectangleWidth,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: Colors.black, width: 2),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 184, 204, 0),
+                          Color(0xFFF1F706),
+                          Color.fromARGB(255, 184, 204, 0),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      border: Border(
+                        left: BorderSide(color: Colors.black, width: 4),
+                        right: BorderSide(color: Colors.black, width: 4),
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26,
@@ -60,31 +89,43 @@ class _MyAppState extends State<MyApp> {
                       ],
                     ),
                   ),
-
-                  Positioned(
-                    left: 110 + bubblePosition,
+                  AnimatedPositioned(
+                    duration: Duration(milliseconds: 100),
+                    curve: Curves.easeOut,
+                    left: ((rectangleWidth - bubbleSize) / 2) + bubblePosition,
+                    bottom: 18,
                     child: Container(
-                      width: 30,
-                      height: 30,
+                      width: bubbleSize,
+                      height: bubbleSize,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey[300],
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black, width: 2),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
-                            blurRadius: 6,
-                            offset: Offset(2, 2),
+                            blurRadius: 8,
+                            offset: Offset(3, 3),
                           ),
                         ],
                       ),
                     ),
                   ),
+                  Positioned(
+                    left: (rectangleWidth - 70) / 2,
+                    child: Container(
+                      width: 70,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(color: Colors.black, width: 2),
+                          right: BorderSide(color: Colors.black, width: 2),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-
               SizedBox(height: 30),
-
               Container(
                 width: 90,
                 height: 90,
