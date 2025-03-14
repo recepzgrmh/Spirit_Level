@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_spirit/screens/screen_X.dart';
 import 'package:my_spirit/screens/screen_XY.dart';
 import 'package:my_spirit/screens/screen_Y.dart';
-import 'package:my_spirit/screens/screen_X.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Sayfa sıralaması: 0: X Ekseni, 1: X+Y, 2: Y Ekseni
   int currentPageIndex = 1;
 
   @override
@@ -22,13 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateOrientation() {
     if (currentPageIndex == 0) {
-      // X Ekseni (yatay mod)
+      // X Ekseni sayfası için landscape mod
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
     } else {
-      // XY ve Y ekseni (dikey mod)
+      // X+Y ve Y Ekseni sayfaları için portrait mod
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
@@ -39,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      const ScreenX(), // <-- aslında y ekseninde hareket ediyor bubble
+      const ScreenX(),
       const ScreenXY(),
-      const ScreenY(), // <-- aslında x ekseninde hareket ediyor bubble
+      const ScreenY(),
     ];
 
     return Scaffold(
@@ -57,9 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildNavButton("X Ekseni", 2),
+            _buildNavButton("X Ekseni", 0),
             _buildNavButton("X + Y", 1),
-            _buildNavButton("Y Ekseni", 0),
+            _buildNavButton("Y Ekseni", 2),
           ],
         ),
       ),
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           setState(() {
             currentPageIndex = index;
-            _updateOrientation(); // Ekran yönünü güncelle
+            _updateOrientation();
           });
         },
         style: ElevatedButton.styleFrom(

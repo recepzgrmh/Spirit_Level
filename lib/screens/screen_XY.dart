@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -10,26 +12,26 @@ class ScreenXY extends StatefulWidget {
 
 class _ScreenXYState extends State<ScreenXY> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
-  double bubblePositionY = 0.0;
   double bubblePositionX = 0.0;
+  double bubblePositionY = 0.0;
   double sensitivityFactor = 40.0;
   double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
-    // Orientation ayarı artık HomeScreen tarafından kontrol ediliyor.
+
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
         yAccel = event.y;
         zAccel = event.z;
 
-        double newPositionY = (-yAccel * sensitivityFactor).clamp(
+        double newPositionX = (xAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-        double newPositionX = (xAccel * sensitivityFactor).clamp(
+        double newPositionY = (-yAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
@@ -55,12 +57,12 @@ class _ScreenXYState extends State<ScreenXY> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Ana Daire
+                // Ana daire
                 Container(
                   width: circleDiameter,
                   height: circleDiameter,
                   decoration: BoxDecoration(
-                    gradient: RadialGradient(
+                    gradient: const RadialGradient(
                       colors: [
                         Color.fromARGB(255, 219, 241, 19),
                         Color(0xFFF1F706),
@@ -70,7 +72,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     ),
                     border: Border.all(color: Colors.black87, width: 3),
                     borderRadius: BorderRadius.circular(circleDiameter / 2),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black38,
                         blurRadius: 12,
@@ -84,7 +86,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     ],
                   ),
                 ),
-                // Yatay ve dikey referans çizgileri
+                // Referans çizgileri (yatay ve dikey)
                 Positioned(
                   child: Container(
                     width: circleDiameter,
@@ -99,7 +101,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     color: const Color.fromARGB(100, 0, 0, 0),
                   ),
                 ),
-                // Ortadaki Çember (Hedef Nokta)
+                // Ortadaki hedef çember
                 Positioned(
                   child: Container(
                     height: 60,
@@ -110,7 +112,7 @@ class _ScreenXYState extends State<ScreenXY> {
                         color: const Color.fromARGB(200, 255, 255, 255),
                         width: 4,
                       ),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.white38,
                           blurRadius: 14,
@@ -121,9 +123,9 @@ class _ScreenXYState extends State<ScreenXY> {
                     ),
                   ),
                 ),
-                // Bubble (baloncuk)
+                // Hareketli balon
                 AnimatedPositioned(
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.easeOut,
                   left: (circleDiameter - bubbleSize) / 2 + bubblePositionX,
                   top: (circleDiameter - bubbleSize) / 2 + bubblePositionY,
@@ -133,7 +135,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     decoration: BoxDecoration(
                       color: Colors.yellow.shade300,
                       shape: BoxShape.circle,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black38,
                           blurRadius: 10,
@@ -150,7 +152,8 @@ class _ScreenXYState extends State<ScreenXY> {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
+            // Sensör değerlerinin gösterildiği kutucuk
             Container(
               width: 90,
               height: 90,
@@ -159,7 +162,7 @@ class _ScreenXYState extends State<ScreenXY> {
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.white, width: 3),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black38,
                     blurRadius: 10,
@@ -172,15 +175,15 @@ class _ScreenXYState extends State<ScreenXY> {
                 children: [
                   Text(
                     "X: ${xAccel.toStringAsFixed(1)}",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
                     "Y: ${yAccel.toStringAsFixed(1)}",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
                     "Z: ${zAccel.toStringAsFixed(1)}",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ],
               ),
