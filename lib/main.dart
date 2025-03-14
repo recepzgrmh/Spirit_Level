@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_spirit/screens/home_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,6 +10,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreen());
+    return MaterialApp(
+      home: const HomeScreen(),
+
+      theme: ThemeData(
+        primaryColor: Colors.grey,
+        scaffoldBackgroundColor: Colors.grey[300],
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFDCDCDC),
+          titleTextStyle: TextStyle(color: Colors.black87, fontSize: 20),
+        ),
+      ),
+    );
   }
 }

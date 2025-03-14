@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ScreenXY extends StatefulWidget {
@@ -57,48 +58,44 @@ class _ScreenXYState extends State<ScreenXY> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Ana daire
+                // daire
                 Container(
                   width: circleDiameter,
                   height: circleDiameter,
                   decoration: BoxDecoration(
-                    gradient: const RadialGradient(
+                    gradient: const LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 219, 241, 19),
-                        Color(0xFFF1F706),
+                        Color(0xFFDCDCDC),
+                        Color(0xFFFAFAFA),
+                        Color(0xFFDCDCDC),
                       ],
-                      center: Alignment.center,
-                      radius: 1.2,
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
                     border: Border.all(color: Colors.black87, width: 3),
                     borderRadius: BorderRadius.circular(circleDiameter / 2),
                     boxShadow: const [
                       BoxShadow(
-                        color: Colors.black38,
+                        color: Colors.black26,
                         blurRadius: 12,
                         offset: Offset(4, 4),
-                      ),
-                      BoxShadow(
-                        color: Colors.white30,
-                        blurRadius: 6,
-                        spreadRadius: 2,
                       ),
                     ],
                   ),
                 ),
-                // Referans çizgileri (yatay ve dikey)
+                // yatay ve dikey hedef çizgisi
                 Positioned(
                   child: Container(
                     width: circleDiameter,
                     height: 1.5,
-                    color: const Color.fromARGB(100, 0, 0, 0),
+                    color: Colors.black54,
                   ),
                 ),
                 Positioned(
                   child: Container(
                     width: 1.5,
                     height: circleDiameter,
-                    color: const Color.fromARGB(100, 0, 0, 0),
+                    color: Colors.black54,
                   ),
                 ),
                 // Ortadaki hedef çember
@@ -108,22 +105,29 @@ class _ScreenXYState extends State<ScreenXY> {
                     width: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color.fromARGB(200, 255, 255, 255),
-                        width: 4,
-                      ),
+                      border: Border.all(color: Colors.black87, width: 4),
                       boxShadow: const [
                         BoxShadow(
                           color: Colors.white38,
-                          blurRadius: 14,
-                          spreadRadius: 3,
+                          blurRadius: 8,
+                          spreadRadius: 2,
                         ),
-                        BoxShadow(color: Colors.black26, blurRadius: 8),
+                        BoxShadow(color: Colors.black26, blurRadius: 6),
                       ],
                     ),
                   ),
                 ),
-                // Hareketli balon
+                // Logo
+                Positioned(
+                  top: 60,
+                  child: SvgPicture.asset(
+                    'assets/images/izeltas-logo.svg',
+                    semanticsLabel: 'İzeltas SVG Resim',
+                    width: 15,
+                    height: 15,
+                  ),
+                ),
+                // Hareketli balon (X+Y)
                 AnimatedPositioned(
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeOut,
@@ -133,18 +137,13 @@ class _ScreenXYState extends State<ScreenXY> {
                     width: bubbleSize,
                     height: bubbleSize,
                     decoration: BoxDecoration(
-                      color: Colors.yellow.shade300,
+                      color: Color(0xFFB8EC42), // Yeşil balon
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(
-                          color: Colors.black38,
+                          color: Colors.black45,
                           blurRadius: 10,
                           spreadRadius: 3,
-                        ),
-                        BoxShadow(
-                          color: Colors.white38,
-                          blurRadius: 5,
-                          spreadRadius: 1,
                         ),
                       ],
                     ),

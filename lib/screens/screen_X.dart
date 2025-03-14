@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ScreenX extends StatefulWidget {
@@ -47,23 +48,24 @@ class _ScreenXState extends State<ScreenX> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Çubuk ve hareketli balon
             Stack(
               alignment: Alignment.center,
               children: [
+                //  çubuk
                 Container(
                   width: rectangleWidth,
                   height: 50,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
-                        const Color.fromARGB(255, 184, 204, 0),
-                        const Color(0xFFF1F706),
-                        const Color.fromARGB(255, 184, 204, 0),
+                        Color(0xFFDCDCDC),
+                        Color(0xFFFAFAFA),
+                        Color(0xFFDCDCDC),
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
+                    // Siyah kenarlar
                     border: const Border(
                       left: BorderSide(color: Colors.black, width: 4),
                       right: BorderSide(color: Colors.black, width: 4),
@@ -77,6 +79,7 @@ class _ScreenXState extends State<ScreenX> {
                     ],
                   ),
                 ),
+                // Balon
                 AnimatedPositioned(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
@@ -86,7 +89,7 @@ class _ScreenXState extends State<ScreenX> {
                     width: bubbleSize,
                     height: bubbleSize,
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: Color(0xFFB8EC42),
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(
@@ -98,12 +101,23 @@ class _ScreenXState extends State<ScreenX> {
                     ),
                   ),
                 ),
+                // Logo
+                Positioned(
+                  left: 30,
+                  child: SvgPicture.asset(
+                    'assets/images/izeltas-logo.svg',
+                    semanticsLabel: 'İzeltas SVG Resim',
+                    width: 10,
+                    height: 10,
+                  ),
+                ),
+                // Ortadaki ince dikdörtgen (hedef çizgisi)
                 Positioned(
                   left: (rectangleWidth - 70) / 2,
                   child: Container(
                     width: 70,
                     height: 50,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       border: Border(
                         left: BorderSide(color: Colors.black, width: 2),
                         right: BorderSide(color: Colors.black, width: 2),

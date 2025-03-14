@@ -46,11 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: const Text("Su Terazisi Uygulaması"),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 226, 230, 1),
+        backgroundColor: Colors.grey,
       ),
       body: IndexedStack(index: currentPageIndex, children: pages),
       bottomNavigationBar: Padding(
@@ -77,13 +76,15 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         style: ElevatedButton.styleFrom(
+          // Aktif sayfada metalik ton, pasif sayfada gri ton
           backgroundColor:
               currentPageIndex == index
-                  ? const Color.fromARGB(255, 226, 230, 1)
-                  : Colors.grey[400],
+                  ? const Color(0xFFDCDCDC)
+                  : Colors.grey[500],
           padding: const EdgeInsets.symmetric(vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: Colors.black, width: 1.5),
           ),
         ),
         child: Text(
@@ -91,7 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: currentPageIndex == index ? Colors.white : Colors.black,
+            // Aktif sayfada siyah yazı, pasif sayfada siyaha yakın gri
+            color: currentPageIndex == index ? Colors.black : Colors.black87,
           ),
         ),
       ),

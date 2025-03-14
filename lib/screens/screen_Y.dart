@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ScreenY extends StatefulWidget {
   const ScreenY({super.key});
@@ -53,15 +54,16 @@ class _ScreenYState extends State<ScreenY> {
             Stack(
               alignment: Alignment.center,
               children: [
+                // Gümüş rengi çubuk
                 Container(
                   width: rectangleWidth,
                   height: barHeight,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
-                        const Color.fromARGB(255, 184, 204, 0),
-                        const Color(0xFFF1F706),
-                        const Color.fromARGB(255, 184, 204, 0),
+                        Color(0xFFDCDCDC),
+                        Color(0xFFFAFAFA),
+                        Color(0xFFDCDCDC),
                       ],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
@@ -85,7 +87,7 @@ class _ScreenYState extends State<ScreenY> {
                   child: Container(
                     width: 70,
                     height: barHeight,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       border: Border(
                         left: BorderSide(color: Colors.black, width: 2),
                         right: BorderSide(color: Colors.black, width: 2),
@@ -93,7 +95,17 @@ class _ScreenYState extends State<ScreenY> {
                     ),
                   ),
                 ),
-                // Balon, xAccel üzerinden yatay olarak hareket ediyor
+                // Logo
+                Positioned(
+                  left: 30,
+                  child: SvgPicture.asset(
+                    'assets/images/izeltas-logo.svg',
+                    semanticsLabel: 'İzeltas SVG Resim',
+                    width: 10,
+                    height: 10,
+                  ),
+                ),
+                // Balon (xAccel üzerinden yatay hareket)
                 AnimatedPositioned(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
@@ -103,7 +115,7 @@ class _ScreenYState extends State<ScreenY> {
                     width: bubbleSize,
                     height: bubbleSize,
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: Color(0xFFB8EC42),
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(
