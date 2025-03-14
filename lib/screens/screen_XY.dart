@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:flutter/services.dart';
 
 class ScreenXY extends StatefulWidget {
   const ScreenXY({super.key});
@@ -17,17 +16,9 @@ class _ScreenXYState extends State<ScreenXY> {
   double maxBubbleOffset = 0.0;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-  }
-
-  @override
   void initState() {
     super.initState();
+    // Orientation ayarı artık HomeScreen tarafından kontrol ediliyor.
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
@@ -38,22 +29,14 @@ class _ScreenXYState extends State<ScreenXY> {
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-
         double newPositionX = (xAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-
         bubblePositionX = newPositionX;
         bubblePositionY = newPositionY;
       });
     });
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([]);
-    super.dispose();
   }
 
   @override
@@ -106,14 +89,14 @@ class _ScreenXYState extends State<ScreenXY> {
                   child: Container(
                     width: circleDiameter,
                     height: 1.5,
-                    color: const Color.fromARGB(100, 0, 0, 0), //zaaaaaaaaaaaaa,
+                    color: const Color.fromARGB(100, 0, 0, 0),
                   ),
                 ),
                 Positioned(
                   child: Container(
                     width: 1.5,
                     height: circleDiameter,
-                    color: const Color.fromARGB(100, 0, 0, 0), //zaaaaaaaaaaaaa,
+                    color: const Color.fromARGB(100, 0, 0, 0),
                   ),
                 ),
                 // Ortadaki Çember (Hedef Nokta)
@@ -124,12 +107,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color.fromARGB(
-                          200,
-                          255,
-                          255,
-                          255,
-                        ), //zaaaaaaaaaaaaa,
+                        color: const Color.fromARGB(200, 255, 255, 255),
                         width: 4,
                       ),
                       boxShadow: [
@@ -173,7 +151,6 @@ class _ScreenXYState extends State<ScreenXY> {
               ],
             ),
             SizedBox(height: 30),
-            // Verilerin gösterildiği kutucuğu değiştirmedim
             Container(
               width: 90,
               height: 90,

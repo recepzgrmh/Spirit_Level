@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_spirit/screens/home_screen.dart';
-import 'screens/screen_X.dart';
+import 'screens/screen_Y.dart';
 
 void main() {
   runApp(MyApp());

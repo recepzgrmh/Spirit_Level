@@ -1,59 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:flutter/services.dart';
 
-class ScreenY extends StatefulWidget {
-  const ScreenY({super.key});
+class ScreenX extends StatefulWidget {
+  const ScreenX({super.key});
 
   @override
-  State<ScreenY> createState() => _ScreenYState();
+  State<ScreenX> createState() => _ScreenXState();
 }
 
-class _ScreenYState extends State<ScreenY> {
+class _ScreenXState extends State<ScreenX> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
-  double bubblePositionY = 0.0;
-  double sensitivityFactor = 40.0; // Y ekseni için hassasiyet
+  double bubblePosition = 0.0;
+  double sensitivityFactor = 40.0;
   double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp, // Dikey moda sabitliyoruz
-      DeviceOrientation.portraitDown,
-    ]);
-
+    // Orientation ayarı artık HomeScreen üzerinden yapılıyor.
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
         yAccel = event.y;
         zAccel = event.z;
 
-        // Y ekseni için bubble pozisyonunu ayarla
-        double newPositionY = (yAccel * sensitivityFactor).clamp(
+        double newPosition = (-yAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-
-        bubblePositionY = newPositionY;
+        bubblePosition = newPosition;
       });
     });
   }
 
   @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations(
-      [],
-    ); // Yönlendirme serbest bırakılıyor
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double rectangleHeight = screenHeight * 0.8;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double rectangleWidth = screenWidth * 0.8;
     double bubbleSize = 60;
-    maxBubbleOffset = (rectangleHeight - bubbleSize) / 2;
+    maxBubbleOffset = (rectangleWidth - bubbleSize) / 2;
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -65,8 +50,8 @@ class _ScreenYState extends State<ScreenY> {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: 50, // Dikey modda ince uzun dikdörtgen
-                  height: rectangleHeight,
+                  width: rectangleWidth,
+                  height: 50,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -78,8 +63,8 @@ class _ScreenYState extends State<ScreenY> {
                       end: Alignment.bottomCenter,
                     ),
                     border: Border(
-                      top: BorderSide(color: Colors.black, width: 4),
-                      bottom: BorderSide(color: Colors.black, width: 4),
+                      left: BorderSide(color: Colors.black, width: 4),
+                      right: BorderSide(color: Colors.black, width: 4),
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -93,8 +78,8 @@ class _ScreenYState extends State<ScreenY> {
                 AnimatedPositioned(
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeOut,
-                  top: ((rectangleHeight - bubbleSize) / 2) + bubblePositionY,
-                  left: 10, // Ortalamak için hafif kaydırma
+                  left: ((rectangleWidth - bubbleSize) / 2) + bubblePosition,
+                  bottom: 18,
                   child: Container(
                     width: bubbleSize,
                     height: bubbleSize,
@@ -112,14 +97,14 @@ class _ScreenYState extends State<ScreenY> {
                   ),
                 ),
                 Positioned(
-                  top: (rectangleHeight - 70) / 2,
+                  left: (rectangleWidth - 70) / 2,
                   child: Container(
-                    width: 50,
-                    height: 70,
+                    width: 70,
+                    height: 50,
                     decoration: BoxDecoration(
                       border: Border(
-                        top: BorderSide(color: Colors.black, width: 2),
-                        bottom: BorderSide(color: Colors.black, width: 2),
+                        left: BorderSide(color: Colors.black, width: 2),
+                        right: BorderSide(color: Colors.black, width: 2),
                       ),
                     ),
                   ),

@@ -1,60 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:flutter/services.dart';
 
-class ScreenX extends StatefulWidget {
-  const ScreenX({super.key});
+class ScreenY extends StatefulWidget {
+  const ScreenY({super.key});
 
   @override
-  State<ScreenX> createState() => _ScreenXState();
+  State<ScreenY> createState() => _ScreenYState();
 }
 
-class _ScreenXState extends State<ScreenX> {
+class _ScreenYState extends State<ScreenY> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
-  double bubblePosition = 0.0;
-  double sensitivityFactor = 40.0; // Sensitivity artırıldı
+  double bubblePositionX = 0.0;
+  double sensitivityFactor = 40.0;
   double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
         yAccel = event.y;
         zAccel = event.z;
 
-        // Bubble pozisyonunu ayarla ve sınırları aşmasını engelle
-        double newPosition = (-yAccel * sensitivityFactor).clamp(
+        // Balon hareketi artık x değerine bağlı
+        double newPositionX = (xAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-
-        bubblePosition = newPosition;
+        bubblePositionX = newPositionX;
       });
     });
-  }
-
-  @override
-  void dispose() {
-    // Geri dönüldüğünde ekranı tekrar dikey moda getir
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double rectangleWidth = screenWidth * 0.8;
-    double bubbleSize = 60;
+    double barHeight = 50.0;
+    double bubbleSize = 40.0;
     maxBubbleOffset = (rectangleWidth - bubbleSize) / 2;
 
     return Scaffold(
@@ -63,12 +47,13 @@ class _ScreenXState extends State<ScreenX> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Yatay çubuk ve hareketli balon
             Stack(
               alignment: Alignment.center,
               children: [
                 Container(
                   width: rectangleWidth,
-                  height: 50,
+                  height: barHeight,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -76,8 +61,8 @@ class _ScreenXState extends State<ScreenX> {
                         Color(0xFFF1F706),
                         Color.fromARGB(255, 184, 204, 0),
                       ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
                     border: Border(
                       left: BorderSide(color: Colors.black, width: 4),
@@ -92,11 +77,26 @@ class _ScreenXState extends State<ScreenX> {
                     ],
                   ),
                 ),
+                // Ortada hedef göstergesi (çubuk üzerinde)
+                Positioned(
+                  left: (rectangleWidth - 70) / 2,
+                  child: Container(
+                    width: 70,
+                    height: barHeight,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        left: BorderSide(color: Colors.black, width: 2),
+                        right: BorderSide(color: Colors.black, width: 2),
+                      ),
+                    ),
+                  ),
+                ),
+                // Balon (bubble), x değerine bağlı hareket ediyor
                 AnimatedPositioned(
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeOut,
-                  left: ((rectangleWidth - bubbleSize) / 2) + bubblePosition,
-                  bottom: 18,
+                  left: ((rectangleWidth - bubbleSize) / 2) + bubblePositionX,
+                  top: (barHeight - bubbleSize) / 2,
                   child: Container(
                     width: bubbleSize,
                     height: bubbleSize,
@@ -113,22 +113,10 @@ class _ScreenXState extends State<ScreenX> {
                     ),
                   ),
                 ),
-                Positioned(
-                  left: (rectangleWidth - 70) / 2,
-                  child: Container(
-                    width: 70,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(color: Colors.black, width: 2),
-                        right: BorderSide(color: Colors.black, width: 2),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
+            // Sensor değerlerini gösteren kutucuk
             Container(
               width: 90,
               height: 90,
