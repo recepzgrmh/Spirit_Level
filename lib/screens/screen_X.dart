@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-
 import 'package:my_spirit/widgets/stick.dart';
 import 'package:my_spirit/widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -52,13 +51,13 @@ class _ScreenXState extends State<ScreenX> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 30),
             Stack(
               alignment: Alignment.center,
               children: [
                 Container(
-                  alignment: Alignment.center,
-                  width: screenWidth,
-                  height: 80,
+                  width: rectangleWidth,
+                  height: 65,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -71,15 +70,14 @@ class _ScreenXState extends State<ScreenX> {
                 // Balon widget'ı
                 Bubble(
                   rectangleWidth: rectangleWidth,
-                  bubbleSize: bubbleSize - 15,
+                  bubbleSize: bubbleSize - 17,
                   bubblePositionX: bubblePosition,
                 ),
               ],
             ),
-            const SizedBox(height: 30),
             // Sensör değerlerini gösteren kutucuk
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
               child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],

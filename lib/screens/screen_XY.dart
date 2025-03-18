@@ -123,7 +123,7 @@ class _ScreenXYState extends State<ScreenXY> {
                 Positioned(
                   top: 10,
                   child: Image.asset(
-                    'assets/images/ilogo.png', // SVG yerine dönüştürülmüş resim dosyası
+                    'assets/images/ilogo.png',
                     width: 150,
                     height: 150,
                   ),

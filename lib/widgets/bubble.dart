@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_spirit/styles/colors/app_colors.dart';
 
 class Bubble extends StatelessWidget {
   final double rectangleWidth;
@@ -31,7 +32,7 @@ class Bubble extends StatelessWidget {
         width: bubbleSize,
         height: bubbleSize,
         decoration: BoxDecoration(
-          color: const Color(0xFFB8EC42),
+          color: AppColors.bubbleColor,
           shape: BoxShape.circle,
           boxShadow: const [
             BoxShadow(

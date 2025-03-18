@@ -19,7 +19,7 @@ class NavButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20), // Yuvarlatılmış köşeler
+        borderRadius: BorderRadius.circular(20),
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
@@ -35,8 +35,7 @@ class NavButton extends StatelessWidget {
                 width: 1.5,
               ),
             ),
-            elevation:
-                0, // BackdropFilter ile kullanıldığı için elevation kapalı
+            elevation: 0,
           ),
           child: Text(
             text,

@@ -57,21 +57,25 @@ class _ScreenYState extends State<ScreenY> {
               alignment: Alignment.center,
               children: [
                 Container(
-                  width: rectangleWidth + 5,
-                  height: 60,
+                  width: rectangleWidth,
+                  height: 75,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: const Color.fromARGB(
+                          255,
+                          173,
+                          173,
+                          173,
+                        ).withOpacity(0.25),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 0),
+                        offset: const Offset(0, 5),
                       ),
                     ],
                   ),
-
                   child: Stick(
                     rectangleWidth: rectangleWidth,
                     barHeight: barHeight,

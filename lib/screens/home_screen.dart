@@ -4,7 +4,7 @@ import 'package:my_spirit/screens/screen_X.dart';
 import 'package:my_spirit/screens/screen_XY.dart';
 import 'package:my_spirit/screens/screen_Y.dart';
 import '../styles/colors/app_colors.dart';
-import '../widgets/navButtons.dart'; // NavButton widget'ını import ediyoruz
+import '../widgets/navButtons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,11 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      const ScreenX(),
-      const ScreenXY(),
-      const ScreenY(),
-    ];
+    final List<Widget> pages = const [ScreenX(), ScreenXY(), ScreenY()];
 
     return Scaffold(
       appBar: AppBar(

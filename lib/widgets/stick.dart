@@ -16,14 +16,14 @@ class Stick extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none, // Taşan kısımların görünmesi için
+      clipBehavior: Clip.none,
       children: [
         // Material widget ile elevation ekleyerek gölge oluşturuyoruz
         Material(
-          elevation: 3, // Gölge derinliği; istediğiniz değere göre ayarlayın
-          borderRadius: BorderRadius.circular(8),
+          elevation: 4,
+          borderRadius: BorderRadius.circular(12),
           child: Container(
-            width: rectangleWidth,
+            width: rectangleWidth + 5,
             height: barHeight,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -43,6 +43,7 @@ class Stick extends StatelessWidget {
             ),
           ),
         ),
+        // Merkezdeki iki çubuk
         Positioned(
           left: (rectangleWidth - 70) / 2,
           child: Container(
@@ -61,7 +62,7 @@ class Stick extends StatelessWidget {
           left: 20,
           top: topMargin,
           child: Image.asset(
-            'assets/images/ilogo.png', // Dönüştürülmüş resim dosyanız
+            'assets/images/ilogo.png',
             width: 100,
             height: 100,
           ),

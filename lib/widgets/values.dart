@@ -36,15 +36,15 @@ class Values extends StatelessWidget {
         children: [
           Text(
             "X: ${xAccel.toStringAsFixed(1)}",
-            style: const TextStyle(fontSize: 16, color: Colors.white),
+            style: const TextStyle(fontSize: 16, color: AppColors.primaryColor),
           ),
           Text(
             "Y: ${yAccel.toStringAsFixed(1)}",
-            style: const TextStyle(fontSize: 16, color: Colors.white),
+            style: const TextStyle(fontSize: 16, color: AppColors.primaryColor),
           ),
           Text(
             "Z: ${zAccel.toStringAsFixed(1)}",
-            style: const TextStyle(fontSize: 16, color: Colors.white),
+            style: const TextStyle(fontSize: 16, color: AppColors.primaryColor),
           ),
         ],
       ),
