@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_spirit/styles/colors/app_colors.dart';
 import 'package:my_spirit/widgets/values.dart';
+import 'package:my_spirit/widgets/bubble.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ScreenXY extends StatefulWidget {
@@ -15,38 +16,38 @@ class ScreenXY extends StatefulWidget {
 
 class _ScreenXYState extends State<ScreenXY> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
-  double bubblePositionX = 0.0;
-  double bubblePositionY = 0.0;
   final double sensitivityFactor = 40.0;
-  double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
+    // Sensör verilerini dinle
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
         yAccel = event.y;
         zAccel = event.z;
-
-        bubblePositionX = (xAccel * sensitivityFactor).clamp(
-          -maxBubbleOffset,
-          maxBubbleOffset,
-        );
-        bubblePositionY = (-yAccel * sensitivityFactor).clamp(
-          -maxBubbleOffset,
-          maxBubbleOffset,
-        );
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Ekran boyutunu ve hesaplamaları burada yapıyoruz
     double screenWidth = MediaQuery.of(context).size.width;
     double circleDiameter = screenWidth * 0.8;
     double bubbleSize = 40.0;
-    maxBubbleOffset = (circleDiameter - bubbleSize) / 2;
+    double maxBubbleOffset = (circleDiameter - bubbleSize) / 2;
+
+    // Güncel balon pozisyonlarını build aşamasında hesaplıyoruz:
+    double calculatedBubblePositionX = (xAccel * sensitivityFactor).clamp(
+      -maxBubbleOffset,
+      maxBubbleOffset,
+    );
+    double calculatedBubblePositionY = (-yAccel * sensitivityFactor).clamp(
+      -maxBubbleOffset,
+      maxBubbleOffset,
+    );
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -57,7 +58,7 @@ class _ScreenXYState extends State<ScreenXY> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Daire
+                // Daire arka plan
                 Container(
                   width: circleDiameter,
                   height: circleDiameter,
@@ -71,14 +72,10 @@ class _ScreenXYState extends State<ScreenXY> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
-                    border: Border.all(color: AppColors.borderColor, width: 3),
+                    border: Border.all(color: AppColors.borderColor, width: 2),
                     borderRadius: BorderRadius.circular(circleDiameter / 2),
                     boxShadow: const [
-                      BoxShadow(
-                        color: AppColors.borderColor,
-                        blurRadius: 12,
-                        offset: Offset(2, 2),
-                      ),
+                      BoxShadow(color: AppColors.borderColor, blurRadius: 7),
                     ],
                   ),
                 ),
@@ -131,29 +128,15 @@ class _ScreenXYState extends State<ScreenXY> {
                     semanticsLabel: 'İzeltas SVG Resim',
                     width: 15,
                     height: 15,
+                    color: null,
                   ),
                 ),
-                // Hareketli balon (X ve Y eksenleri)
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeOut,
-                  left: (circleDiameter - bubbleSize) / 2 + bubblePositionX,
-                  top: (circleDiameter - bubbleSize) / 2 + bubblePositionY,
-                  child: Container(
-                    width: bubbleSize,
-                    height: bubbleSize,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFB8EC42),
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black45,
-                          blurRadius: 10,
-                          spreadRadius: 3,
-                        ),
-                      ],
-                    ),
-                  ),
+                // Balon
+                Bubble(
+                  rectangleWidth: circleDiameter,
+                  bubbleSize: bubbleSize,
+                  bubblePositionX: calculatedBubblePositionX,
+                  bubblePositionY: calculatedBubblePositionY,
                 ),
               ],
             ),

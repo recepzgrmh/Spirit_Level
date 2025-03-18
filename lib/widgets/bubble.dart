@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 class Bubble extends StatelessWidget {
   final double rectangleWidth;
   final double bubbleSize;
-  final double bubblePosition; // Hesaplanmış konum
+  final double bubblePositionX;
+  final double? bubblePositionY;
+  final double bottomOffset;
 
   const Bubble({
     super.key,
     required this.rectangleWidth,
     required this.bubbleSize,
-    required this.bubblePosition,
+    required this.bubblePositionX,
+    this.bubblePositionY,
+    this.bottomOffset = 18,
   });
 
   @override
@@ -17,8 +21,12 @@ class Bubble extends StatelessWidget {
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
-      left: ((rectangleWidth - bubbleSize) / 2) + bubblePosition,
-      bottom: 18,
+      left: ((rectangleWidth - bubbleSize) / 2) + bubblePositionX,
+      top:
+          bubblePositionY != null
+              ? ((rectangleWidth - bubbleSize) / 2) + bubblePositionY!
+              : null,
+      bottom: bubblePositionY == null ? bottomOffset : null,
       child: Container(
         width: bubbleSize,
         height: bubbleSize,

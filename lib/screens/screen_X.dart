@@ -62,7 +62,7 @@ class _ScreenXState extends State<ScreenX> {
                 Bubble(
                   rectangleWidth: rectangleWidth,
                   bubbleSize: bubbleSize,
-                  bubblePosition: bubblePosition,
+                  bubblePositionX: bubblePosition,
                 ),
                 // Logo
                 Positioned(

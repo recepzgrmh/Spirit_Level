@@ -5,7 +5,6 @@ import 'package:my_spirit/styles/colors/app_colors.dart';
 import 'package:my_spirit/widgets/stick.dart';
 import '../widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/bubble.dart';
 
 class ScreenY extends StatefulWidget {
@@ -82,19 +81,18 @@ class _ScreenYState extends State<ScreenY> {
                 ),
                 // Logo
                 Positioned(
-                  left: 30,
-                  child: SvgPicture.asset(
-                    'assets/images/izeltas-logo.svg',
-                    semanticsLabel: 'İzeltas SVG Resim',
-                    width: 10,
-                    height: 10,
+                  left: 20,
+                  child: Image.asset(
+                    'assets/images/ilogo.png', // SVG yerine dönüştürülmüş resim dosyası
+                    width: 100,
+                    height: 100,
                   ),
                 ),
                 // Balon widget'ı
                 Bubble(
                   rectangleWidth: rectangleWidth,
                   bubbleSize: bubbleSize,
-                  bubblePosition: bubblePositionX,
+                  bubblePositionX: bubblePositionX,
                 ),
               ],
             ),
