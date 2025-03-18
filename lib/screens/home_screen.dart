@@ -4,6 +4,7 @@ import 'package:my_spirit/screens/screen_X.dart';
 import 'package:my_spirit/screens/screen_XY.dart';
 import 'package:my_spirit/screens/screen_Y.dart';
 import '../styles/colors/app_colors.dart';
+import '../widgets/navButtons.dart'; // NavButton widget'ını import ediyoruz
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -59,49 +60,43 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          spacing: 25,
           children: [
-            _buildNavButton("X Ekseni", 0),
-            _buildNavButton("X + Y", 1),
-            _buildNavButton("Y Ekseni", 2),
+            NavButton(
+              text: "X Ekseni",
+              index: 0,
+              currentPageIndex: currentPageIndex,
+              onPressed: () {
+                setState(() {
+                  currentPageIndex = 0;
+                  _updateOrientation();
+                });
+              },
+            ),
+            const SizedBox(width: 25),
+            NavButton(
+              text: "X + Y",
+              index: 1,
+              currentPageIndex: currentPageIndex,
+              onPressed: () {
+                setState(() {
+                  currentPageIndex = 1;
+                  _updateOrientation();
+                });
+              },
+            ),
+            const SizedBox(width: 25),
+            NavButton(
+              text: "Y Ekseni",
+              index: 2,
+              currentPageIndex: currentPageIndex,
+              onPressed: () {
+                setState(() {
+                  currentPageIndex = 2;
+                  _updateOrientation();
+                });
+              },
+            ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavButton(String text, int index) {
-    return Expanded(
-      child: ElevatedButton(
-        onPressed: () {
-          setState(() {
-            currentPageIndex = index;
-            _updateOrientation();
-          });
-        },
-        style: ElevatedButton.styleFrom(
-          // Aktif sayfada metalik ton, pasif sayfada gri ton
-          backgroundColor:
-              currentPageIndex == index
-                  ? AppColors.primaryColor
-                  : AppColors.buttonColor,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: AppColors.borderColor, width: 1.5),
-          ),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            // Aktif sayfada siyah yazı, pasif sayfada siyaha yakın gri
-            color:
-                currentPageIndex == index
-                    ? Colors.black
-                    : AppColors.primaryColor,
-          ),
         ),
       ),
     );

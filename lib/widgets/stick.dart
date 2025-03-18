@@ -16,28 +16,31 @@ class Stick extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none,
+      clipBehavior: Clip.none, // Taşan kısımların görünmesi için
       children: [
-        Container(
-          width: rectangleWidth,
-          height: barHeight,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFFDCDCDC), Color(0xFFFAFAFA), Color(0xFFDCDCDC)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            border: const Border(
-              left: BorderSide(color: AppColors.borderColor, width: 4),
-              right: BorderSide(color: AppColors.borderColor, width: 4),
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 8,
-                offset: Offset(3, 3),
+        // Material widget ile elevation ekleyerek gölge oluşturuyoruz
+        Material(
+          elevation: 12, // Gölge derinliği; istediğiniz değere göre ayarlayın
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            width: rectangleWidth,
+            height: barHeight,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFFDCDCDC),
+                  Color(0xFFFAFAFA),
+                  Color(0xFFDCDCDC),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-            ],
+              border: const Border(
+                left: BorderSide(color: AppColors.borderColor, width: 4),
+                right: BorderSide(color: AppColors.borderColor, width: 4),
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         ),
         Positioned(
@@ -58,7 +61,7 @@ class Stick extends StatelessWidget {
           left: 20,
           top: topMargin,
           child: Image.asset(
-            'assets/images/ilogo.png', // SVG yerine dönüştürülmüş resim dosyası
+            'assets/images/ilogo.png', // Dönüştürülmüş resim dosyanız
             width: 100,
             height: 100,
           ),

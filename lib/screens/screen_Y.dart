@@ -56,12 +56,23 @@ class _ScreenYState extends State<ScreenY> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Gümüş rengi çubuk
-                Stick(
-                  rectangleWidth: rectangleWidth,
-                  barHeight: barHeight,
-                  topMargin: -23,
+                // Gölge eklemek için Stick widget'ını Material ile sarmalıyoruz.
+                Material(
+                  color: const Color.fromARGB(
+                    255,
+                    0,
+                    0,
+                    0,
+                  ), // Açık ve belirgin bir arka plan rengi verin.
+                  elevation: 80, // Gölgenin derinliği
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stick(
+                    rectangleWidth: rectangleWidth,
+                    barHeight: barHeight,
+                    topMargin: -23,
+                  ),
                 ),
+
                 // Balon widget'ı
                 Bubble(
                   rectangleWidth: rectangleWidth,

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-
 import 'package:my_spirit/styles/colors/app_colors.dart';
 import 'package:my_spirit/widgets/values.dart';
 import 'package:my_spirit/widgets/bubble.dart';

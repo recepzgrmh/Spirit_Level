@@ -55,11 +55,15 @@ class _ScreenXState extends State<ScreenX> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Çubuk
-                Stick(
-                  rectangleWidth: rectangleWidth,
-                  barHeight: 50,
-                  topMargin: -25,
+                // Stick widget'ını gölgelendirmek için Material ile sarmalıyoruz.
+                Material(
+                  elevation: 8,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stick(
+                    rectangleWidth: rectangleWidth,
+                    barHeight: 50,
+                    topMargin: -25,
+                  ),
                 ),
                 // Balon widget'ı
                 Bubble(
@@ -67,7 +71,6 @@ class _ScreenXState extends State<ScreenX> {
                   bubbleSize: bubbleSize,
                   bubblePositionX: bubblePosition,
                 ),
-                // Logo
                 // Ortadaki ince dikdörtgen (hedef çizgisi)
                 Positioned(
                   left: (rectangleWidth - 70) / 2,
