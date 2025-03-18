@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_spirit/widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ScreenX extends StatefulWidget {
@@ -129,39 +130,9 @@ class _ScreenXState extends State<ScreenX> {
             ),
             const SizedBox(height: 30),
             // Sensör değerlerini gösteren kutucuk
-            Container(
-              width: 90,
-              height: 90,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white, width: 3),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 10,
-                    offset: Offset(4, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "X: ${xAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    "Y: ${yAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    "Z: ${zAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
-              ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],
         ),

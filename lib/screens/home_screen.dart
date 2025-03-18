@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:my_spirit/screens/screen_X.dart';
 import 'package:my_spirit/screens/screen_XY.dart';
 import 'package:my_spirit/screens/screen_Y.dart';
+import '../styles/colors/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,15 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Su Terazisi Uygulaması"),
+        title: const Text(
+          "Su Terazisi Uygulaması",
+          style: TextStyle(color: AppColors.primaryColor),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.grey,
+        backgroundColor: AppColors.buttonColor,
       ),
       body: IndexedStack(index: currentPageIndex, children: pages),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 25,
           children: [
             _buildNavButton("X Ekseni", 0),
             _buildNavButton("X + Y", 1),
@@ -79,12 +83,12 @@ class _HomeScreenState extends State<HomeScreen> {
           // Aktif sayfada metalik ton, pasif sayfada gri ton
           backgroundColor:
               currentPageIndex == index
-                  ? const Color(0xFFDCDCDC)
-                  : Colors.grey[500],
+                  ? AppColors.primaryColor
+                  : AppColors.buttonColor,
           padding: const EdgeInsets.symmetric(vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Colors.black, width: 1.5),
+            side: const BorderSide(color: AppColors.borderColor, width: 1.5),
           ),
         ),
         child: Text(
@@ -93,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 16,
             fontWeight: FontWeight.bold,
             // Aktif sayfada siyah yazı, pasif sayfada siyaha yakın gri
-            color: currentPageIndex == index ? Colors.black : Colors.black87,
+            color:
+                currentPageIndex == index
+                    ? Colors.black
+                    : AppColors.primaryColor,
           ),
         ),
       ),

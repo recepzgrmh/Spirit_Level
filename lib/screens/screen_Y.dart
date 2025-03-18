@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import '../widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -131,39 +132,9 @@ class _ScreenYState extends State<ScreenY> {
             ),
             const SizedBox(height: 30),
             // Sensör değerlerini gösteren kutucuk
-            Container(
-              width: 90,
-              height: 90,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white, width: 3),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 10,
-                    offset: Offset(4, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "X: ${xAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    "Y: ${yAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    "Z: ${zAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
-              ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],
         ),

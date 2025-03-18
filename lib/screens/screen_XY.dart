@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_spirit/styles/colors/app_colors.dart';
+import 'package:my_spirit/widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ScreenXY extends StatefulWidget {
@@ -72,13 +74,13 @@ class _ScreenXYState extends State<ScreenXY> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
-                    border: Border.all(color: Colors.black87, width: 3),
+                    border: Border.all(color: AppColors.borderColor, width: 3),
                     borderRadius: BorderRadius.circular(circleDiameter / 2),
                     boxShadow: const [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: AppColors.borderColor,
                         blurRadius: 12,
-                        offset: Offset(4, 4),
+                        offset: Offset(2, 2),
                       ),
                     ],
                   ),
@@ -88,14 +90,14 @@ class _ScreenXYState extends State<ScreenXY> {
                   child: Container(
                     width: circleDiameter,
                     height: 1.5,
-                    color: Colors.black54,
+                    color: AppColors.borderColor,
                   ),
                 ),
                 Positioned(
                   child: Container(
                     width: 1.5,
                     height: circleDiameter,
-                    color: Colors.black54,
+                    color: AppColors.borderColor,
                   ),
                 ),
                 // Ortadaki hedef çember
@@ -105,14 +107,20 @@ class _ScreenXYState extends State<ScreenXY> {
                     width: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black87, width: 4),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 4,
+                      ),
                       boxShadow: const [
                         BoxShadow(
                           color: Colors.white38,
                           blurRadius: 8,
                           spreadRadius: 2,
                         ),
-                        BoxShadow(color: Colors.black26, blurRadius: 6),
+                        BoxShadow(
+                          color: Color.fromARGB(68, 207, 10, 43),
+                          blurRadius: 4,
+                        ),
                       ],
                     ),
                   ),
@@ -153,39 +161,9 @@ class _ScreenXYState extends State<ScreenXY> {
             ),
             const SizedBox(height: 30),
             // Sensör değerlerinin gösterildiği kutucuk
-            Container(
-              width: 90,
-              height: 90,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white, width: 3),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 10,
-                    offset: Offset(4, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "X: ${xAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    "Y: ${yAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    "Z: ${zAccel.toStringAsFixed(1)}",
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ],
-              ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],
         ),
