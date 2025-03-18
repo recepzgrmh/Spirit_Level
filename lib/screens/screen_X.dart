@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:my_spirit/styles/colors/app_colors.dart';
 import 'package:my_spirit/widgets/stick.dart';
 import 'package:my_spirit/widgets/values.dart';
@@ -57,7 +56,11 @@ class _ScreenXState extends State<ScreenX> {
               alignment: Alignment.center,
               children: [
                 // Çubuk
-                Stick(rectangleWidth: rectangleWidth),
+                Stick(
+                  rectangleWidth: rectangleWidth,
+                  barHeight: 50,
+                  topMargin: -25,
+                ),
                 // Balon widget'ı
                 Bubble(
                   rectangleWidth: rectangleWidth,
@@ -65,15 +68,6 @@ class _ScreenXState extends State<ScreenX> {
                   bubblePositionX: bubblePosition,
                 ),
                 // Logo
-                Positioned(
-                  left: 30,
-                  child: SvgPicture.asset(
-                    'assets/images/izeltas-logo.svg',
-                    semanticsLabel: 'İzeltas SVG Resim',
-                    width: 10,
-                    height: 10,
-                  ),
-                ),
                 // Ortadaki ince dikdörtgen (hedef çizgisi)
                 Positioned(
                   left: (rectangleWidth - 70) / 2,

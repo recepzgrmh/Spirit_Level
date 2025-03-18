@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:my_spirit/styles/colors/app_colors.dart';
 import 'package:my_spirit/widgets/stick.dart';
 import '../widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -58,35 +57,10 @@ class _ScreenYState extends State<ScreenY> {
               alignment: Alignment.center,
               children: [
                 // Gümüş rengi çubuk
-                Stick(rectangleWidth: rectangleWidth),
-                // Ortada hedef göstergesi (çubuk üzerinde)
-                Positioned(
-                  left: (rectangleWidth - 70) / 2,
-                  child: Container(
-                    width: 70,
-                    height: barHeight,
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          color: AppColors.borderColor,
-                          width: 2,
-                        ),
-                        right: BorderSide(
-                          color: AppColors.borderColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                // Logo
-                Positioned(
-                  left: 20,
-                  child: Image.asset(
-                    'assets/images/ilogo.png', // SVG yerine dönüştürülmüş resim dosyası
-                    width: 100,
-                    height: 100,
-                  ),
+                Stick(
+                  rectangleWidth: rectangleWidth,
+                  barHeight: barHeight,
+                  topMargin: -23,
                 ),
                 // Balon widget'ı
                 Bubble(

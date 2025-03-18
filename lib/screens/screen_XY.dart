@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:my_spirit/styles/colors/app_colors.dart';
 import 'package:my_spirit/widgets/values.dart';
 import 'package:my_spirit/widgets/bubble.dart';
@@ -122,13 +122,11 @@ class _ScreenXYState extends State<ScreenXY> {
                 ),
                 // Logo
                 Positioned(
-                  top: 60,
-                  child: SvgPicture.asset(
-                    'assets/images/izeltas-logo.svg',
-                    semanticsLabel: 'İzeltas SVG Resim',
-                    width: 15,
-                    height: 15,
-                    color: null,
+                  top: 10,
+                  child: Image.asset(
+                    'assets/images/ilogo.png', // SVG yerine dönüştürülmüş resim dosyası
+                    width: 150,
+                    height: 150,
                   ),
                 ),
                 // Balon
