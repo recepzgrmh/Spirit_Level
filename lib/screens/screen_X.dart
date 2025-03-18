@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_spirit/styles/colors/app_colors.dart';
+import 'package:my_spirit/widgets/stick.dart';
 import 'package:my_spirit/widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import '../widgets/bubble.dart';
 
 class ScreenX extends StatefulWidget {
   const ScreenX({super.key});
@@ -15,7 +18,7 @@ class ScreenX extends StatefulWidget {
 class _ScreenXState extends State<ScreenX> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
   double bubblePosition = 0.0;
-  double sensitivityFactor = 40.0;
+  final double sensitivityFactor = 40.0;
   double maxBubbleOffset = 0.0;
 
   @override
@@ -27,6 +30,7 @@ class _ScreenXState extends State<ScreenX> {
         yAccel = event.y;
         zAccel = event.z;
 
+        // -yAccel kullanarak hesaplama
         double newPosition = (-yAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
@@ -52,55 +56,13 @@ class _ScreenXState extends State<ScreenX> {
             Stack(
               alignment: Alignment.center,
               children: [
-                //  çubuk
-                Container(
-                  width: rectangleWidth,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFDCDCDC),
-                        Color(0xFFFAFAFA),
-                        Color(0xFFDCDCDC),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    // Siyah kenarlar
-                    border: const Border(
-                      left: BorderSide(color: Colors.black, width: 4),
-                      right: BorderSide(color: Colors.black, width: 4),
-                    ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 8,
-                        offset: Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                ),
-                // Balon
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                  left: ((rectangleWidth - bubbleSize) / 2) + bubblePosition,
-                  bottom: 18,
-                  child: Container(
-                    width: bubbleSize,
-                    height: bubbleSize,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFB8EC42),
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 8,
-                          offset: Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                  ),
+                // Çubuk
+                Stick(rectangleWidth: rectangleWidth),
+                // Balon widget'ı
+                Bubble(
+                  rectangleWidth: rectangleWidth,
+                  bubbleSize: bubbleSize,
+                  bubblePosition: bubblePosition,
                 ),
                 // Logo
                 Positioned(
@@ -120,8 +82,14 @@ class _ScreenXState extends State<ScreenX> {
                     height: 50,
                     decoration: const BoxDecoration(
                       border: Border(
-                        left: BorderSide(color: Colors.black, width: 2),
-                        right: BorderSide(color: Colors.black, width: 2),
+                        left: BorderSide(
+                          color: AppColors.borderColor,
+                          width: 2,
+                        ),
+                        right: BorderSide(
+                          color: AppColors.borderColor,
+                          width: 2,
+                        ),
                       ),
                     ),
                   ),
@@ -131,7 +99,7 @@ class _ScreenXState extends State<ScreenX> {
             const SizedBox(height: 30),
             // Sensör değerlerini gösteren kutucuk
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],

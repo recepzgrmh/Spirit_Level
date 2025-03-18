@@ -1,9 +1,12 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:my_spirit/styles/colors/app_colors.dart';
+import 'package:my_spirit/widgets/stick.dart';
 import '../widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../widgets/bubble.dart';
 
 class ScreenY extends StatefulWidget {
   const ScreenY({super.key});
@@ -15,19 +18,19 @@ class ScreenY extends StatefulWidget {
 class _ScreenYState extends State<ScreenY> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
   double bubblePositionX = 0.0;
-  double sensitivityFactor = 40.0;
+  final double sensitivityFactor = 40.0;
   double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
-
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
         yAccel = event.y;
         zAccel = event.z;
 
+        // X ekseninde hareket için hesaplama:
         double newPositionX = (xAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
@@ -56,32 +59,7 @@ class _ScreenYState extends State<ScreenY> {
               alignment: Alignment.center,
               children: [
                 // Gümüş rengi çubuk
-                Container(
-                  width: rectangleWidth,
-                  height: barHeight,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFDCDCDC),
-                        Color(0xFFFAFAFA),
-                        Color(0xFFDCDCDC),
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    border: const Border(
-                      left: BorderSide(color: Colors.black, width: 4),
-                      right: BorderSide(color: Colors.black, width: 4),
-                    ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 8,
-                        offset: Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                ),
+                Stick(rectangleWidth: rectangleWidth),
                 // Ortada hedef göstergesi (çubuk üzerinde)
                 Positioned(
                   left: (rectangleWidth - 70) / 2,
@@ -90,8 +68,14 @@ class _ScreenYState extends State<ScreenY> {
                     height: barHeight,
                     decoration: const BoxDecoration(
                       border: Border(
-                        left: BorderSide(color: Colors.black, width: 2),
-                        right: BorderSide(color: Colors.black, width: 2),
+                        left: BorderSide(
+                          color: AppColors.borderColor,
+                          width: 2,
+                        ),
+                        right: BorderSide(
+                          color: AppColors.borderColor,
+                          width: 2,
+                        ),
                       ),
                     ),
                   ),
@@ -106,34 +90,18 @@ class _ScreenYState extends State<ScreenY> {
                     height: 10,
                   ),
                 ),
-                // Balon (xAccel üzerinden yatay hareket)
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                  left: ((rectangleWidth - bubbleSize) / 2) + bubblePositionX,
-                  top: (barHeight - bubbleSize) / 2,
-                  child: Container(
-                    width: bubbleSize,
-                    height: bubbleSize,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFB8EC42),
-                      shape: BoxShape.circle,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 8,
-                          offset: Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                  ),
+                // Balon widget'ı
+                Bubble(
+                  rectangleWidth: rectangleWidth,
+                  bubbleSize: bubbleSize,
+                  bubblePosition: bubblePositionX,
                 ),
               ],
             ),
             const SizedBox(height: 30),
             // Sensör değerlerini gösteren kutucuk
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],

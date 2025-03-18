@@ -17,29 +17,26 @@ class _ScreenXYState extends State<ScreenXY> {
   double xAccel = 0.0, yAccel = 0.0, zAccel = 0.0;
   double bubblePositionX = 0.0;
   double bubblePositionY = 0.0;
-  double sensitivityFactor = 40.0;
+  final double sensitivityFactor = 40.0;
   double maxBubbleOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
-
     accelerometerEvents.listen((event) {
       setState(() {
         xAccel = event.x;
         yAccel = event.y;
         zAccel = event.z;
 
-        double newPositionX = (xAccel * sensitivityFactor).clamp(
+        bubblePositionX = (xAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-        double newPositionY = (-yAccel * sensitivityFactor).clamp(
+        bubblePositionY = (-yAccel * sensitivityFactor).clamp(
           -maxBubbleOffset,
           maxBubbleOffset,
         );
-        bubblePositionX = newPositionX;
-        bubblePositionY = newPositionY;
       });
     });
   }
@@ -48,7 +45,7 @@ class _ScreenXYState extends State<ScreenXY> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double circleDiameter = screenWidth * 0.8;
-    double bubbleSize = 40;
+    double bubbleSize = 40.0;
     maxBubbleOffset = (circleDiameter - bubbleSize) / 2;
 
     return Scaffold(
@@ -60,7 +57,7 @@ class _ScreenXYState extends State<ScreenXY> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // daire
+                // Daire
                 Container(
                   width: circleDiameter,
                   height: circleDiameter,
@@ -85,7 +82,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     ],
                   ),
                 ),
-                // yatay ve dikey hedef çizgisi
+                // Yatay hedef çizgisi
                 Positioned(
                   child: Container(
                     width: circleDiameter,
@@ -93,6 +90,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     color: AppColors.borderColor,
                   ),
                 ),
+                // Dikey hedef çizgisi
                 Positioned(
                   child: Container(
                     width: 1.5,
@@ -135,7 +133,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     height: 15,
                   ),
                 ),
-                // Hareketli balon (X+Y)
+                // Hareketli balon (X ve Y eksenleri)
                 AnimatedPositioned(
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeOut,
@@ -145,7 +143,7 @@ class _ScreenXYState extends State<ScreenXY> {
                     width: bubbleSize,
                     height: bubbleSize,
                     decoration: BoxDecoration(
-                      color: Color(0xFFB8EC42), // Yeşil balon
+                      color: const Color(0xFFB8EC42),
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(
@@ -160,9 +158,9 @@ class _ScreenXYState extends State<ScreenXY> {
               ],
             ),
             const SizedBox(height: 30),
-            // Sensör değerlerinin gösterildiği kutucuk
+            // Sensör değerlerini gösteren kutucuk
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Values(xAccel: xAccel, yAccel: yAccel, zAccel: zAccel),
             ),
           ],
