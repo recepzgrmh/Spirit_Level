@@ -30,7 +30,10 @@ class NavButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
-              side: const BorderSide(color: AppColors.borderColor, width: 1.5),
+              side: const BorderSide(
+                color: Color.fromARGB(61, 42, 48, 119),
+                width: 1.5,
+              ),
             ),
             elevation:
                 0, // BackdropFilter ile kullanıldığı için elevation kapalı

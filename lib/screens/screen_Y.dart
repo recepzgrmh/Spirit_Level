@@ -56,23 +56,28 @@ class _ScreenYState extends State<ScreenY> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Gölge eklemek için Stick widget'ını Material ile sarmalıyoruz.
-                Material(
-                  color: const Color.fromARGB(
-                    255,
-                    0,
-                    0,
-                    0,
-                  ), // Açık ve belirgin bir arka plan rengi verin.
-                  elevation: 80, // Gölgenin derinliği
-                  borderRadius: BorderRadius.circular(8),
+                Container(
+                  width: rectangleWidth + 5,
+                  height: 60,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+
                   child: Stick(
                     rectangleWidth: rectangleWidth,
                     barHeight: barHeight,
                     topMargin: -23,
                   ),
                 ),
-
                 // Balon widget'ı
                 Bubble(
                   rectangleWidth: rectangleWidth,

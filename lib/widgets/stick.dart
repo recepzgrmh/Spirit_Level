@@ -20,7 +20,7 @@ class Stick extends StatelessWidget {
       children: [
         // Material widget ile elevation ekleyerek gölge oluşturuyoruz
         Material(
-          elevation: 12, // Gölge derinliği; istediğiniz değere göre ayarlayın
+          elevation: 3, // Gölge derinliği; istediğiniz değere göre ayarlayın
           borderRadius: BorderRadius.circular(8),
           child: Container(
             width: rectangleWidth,

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:my_spirit/styles/colors/app_colors.dart';
+
 import 'package:my_spirit/widgets/stick.dart';
 import 'package:my_spirit/widgets/values.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -55,10 +55,13 @@ class _ScreenXState extends State<ScreenX> {
             Stack(
               alignment: Alignment.center,
               children: [
-                // Stick widget'ını gölgelendirmek için Material ile sarmalıyoruz.
-                Material(
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(8),
+                Container(
+                  alignment: Alignment.center,
+                  width: screenWidth,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Stick(
                     rectangleWidth: rectangleWidth,
                     barHeight: 50,
@@ -68,28 +71,8 @@ class _ScreenXState extends State<ScreenX> {
                 // Balon widget'ı
                 Bubble(
                   rectangleWidth: rectangleWidth,
-                  bubbleSize: bubbleSize,
+                  bubbleSize: bubbleSize - 15,
                   bubblePositionX: bubblePosition,
-                ),
-                // Ortadaki ince dikdörtgen (hedef çizgisi)
-                Positioned(
-                  left: (rectangleWidth - 70) / 2,
-                  child: Container(
-                    width: 70,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          color: AppColors.borderColor,
-                          width: 2,
-                        ),
-                        right: BorderSide(
-                          color: AppColors.borderColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
